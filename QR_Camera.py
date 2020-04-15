@@ -18,8 +18,8 @@ class App:
         self.vid=VideoCaptura(self.font_video)
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='black',
-                        foreground="green",height=4,padx=10, pady=10,font=('Arial', 10))
+        self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='white'
+                                        ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
         
         self.canvas=Canvas(self.ventana,bg='red',width=self.vid.width,height=self.vid.height)
@@ -110,3 +110,4 @@ class VideoCaptura:
                 
 if __name__=="__main__":
     App()
+
