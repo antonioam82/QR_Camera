@@ -18,7 +18,7 @@ class App:
         self.vid=VideoCaptura(self.font_video)
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='white'
+        self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
         
