@@ -10,7 +10,7 @@ import os
 
 class App:
     def __init__(self,font_video=0):
-        self.appName = "camera"
+        self.appName = "QR Camera"
         self.ventana = Tk()
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
