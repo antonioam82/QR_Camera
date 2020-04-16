@@ -10,6 +10,8 @@ import os
 
 class App:
     def __init__(self,font_video=0):
+        global info
+        info = []
         self.appName = "QR Camera"
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -41,12 +43,14 @@ class App:
         self.ventana.mainloop()
         
     def guardar(self):
-        documento=open('QR_info.txt',"w",encoding="utf-8")
-        linea=""
-        for c in str(info[0][0]):
-            linea=linea+c
-        documento.write(linea)
-        documento.close()
+        if info != []:
+            documento=open('QR_info.txt',"w",encoding="utf-8")
+            linea=""
+            for c in str(info[0][0]):
+                linea=linea+c
+            documento.write(linea)
+            documento.close()
+            messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'QR_info.txt\'")
 
     def captura(self):
         ver,frame=self.vid.get_frame()
