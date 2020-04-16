@@ -18,6 +18,8 @@ class App:
         self.vid=VideoCaptura(self.font_video)
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
+        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar)
+        self.btnSave.pack(side=BOTTOM)        
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
@@ -34,8 +36,17 @@ class App:
                                 activebackground='red',command=self.screen_shot)
         self.btnScreen.pack(side=LEFT)
 
+
         self.visor()
         self.ventana.mainloop()
+        
+    def guardar(self):
+        documento=open('QR_info.txt',"w",encoding="utf-8")
+        linea=""
+        for c in str(info[0][0]):
+            linea=linea+c
+        documento.write(linea)
+        documento.close()
 
     def captura(self):
         ver,frame=self.vid.get_frame()
@@ -45,6 +56,7 @@ class App:
             self.leer()
         
     def abrir(self):
+        global info
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
         if ruta != "":
@@ -57,6 +69,7 @@ class App:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
         
     def screen_shot(self):
+        global info
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
         archivo = cv2.imread("QRsearch_screenshoot.jpg")
         info = decode(archivo)
@@ -75,6 +88,7 @@ class App:
             self.ventana.after(15,self.visor)
 
     def leer(self):
+        global info
         archivo = cv2.imread("cameraCapt.jpg")
         info = decode(archivo)
         if info != []:
@@ -110,4 +124,5 @@ class VideoCaptura:
                 
 if __name__=="__main__":
     App()
+
 
