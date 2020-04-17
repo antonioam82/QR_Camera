@@ -63,7 +63,6 @@ class App:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
                     
-        
     def active_cam(self):
         global active_camera
         if active_camera == False:
@@ -81,4 +80,5 @@ class App:
 
 if __name__=="__main__":
     App()
+         
          
