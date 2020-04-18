@@ -10,8 +10,7 @@ import os
 
 class App:
     def __init__(self,font_video=0):
-        global info
-        info = []
+        self.info = []
         self.appName = "QR Camera"
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -29,7 +28,7 @@ class App:
         self.canvas=Canvas(self.ventana,bg='red',width=self.vid.width,height=self.vid.height)
         self.canvas.pack()
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
-                    activebackground='red',command=self.abrir)
+                               activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
         self.btnCamera = Button(self.ventana,text="DETECTAR EN CAMARA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.captura)
@@ -41,9 +40,10 @@ class App:
 
         self.visor()
         self.ventana.mainloop()
+    
         
     def guardar(self):
-        if info != []:
+        if self.info != []:
             documento=open('QR_info.txt',"w",encoding="utf-8")
             linea=""
             for c in str(info[0][0]):
@@ -60,26 +60,24 @@ class App:
             self.leer()
         
     def abrir(self):
-        global info
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
         if ruta != "":
             archivo = cv2.imread(ruta)
-            info = decode(archivo)
-            if info != []:
+            self.info = decode(archivo)
+            if self.info != []:
                 self.display.delete('1.0',END)
-                self.display.insert(END,info[0][0])
+                self.display.insert(END,self.info[0][0])
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
         
     def screen_shot(self):
-        global info
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
         archivo = cv2.imread("QRsearch_screenshoot.jpg")
-        info = decode(archivo)
-        if info != []:
+        self.info = decode(archivo)
+        if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,info[0][0])
+            self.display.insert(END,self.info[0][0])
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
@@ -92,12 +90,11 @@ class App:
             self.ventana.after(15,self.visor)
 
     def leer(self):
-        global info
         archivo = cv2.imread("cameraCapt.jpg")
-        info = decode(archivo)
-        if info != []:
+        self.info = decode(archivo)
+        if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,info[0][0])
+            self.display.insert(END,self.info[0][0])
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("cameraCapt.jpg")
@@ -128,5 +125,6 @@ class VideoCaptura:
                 
 if __name__=="__main__":
     App()
+
 
 
