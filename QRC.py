@@ -9,13 +9,13 @@ from PIL import Image, ImageTk
 import os
 
 class App:
-    def __init__(self):#,font_video=0):
+    def __init__(self,font_video=0):
         self.active_camera = False
         self.appName = 'QR Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
-        #self.font_video=font_video
+        self.font_video=font_video
         #self.vid=VideoCaptura(self.font_video)
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
@@ -37,6 +37,9 @@ class App:
 
         #self.visor()
         self.ventana.mainloop()
+        
+    #def inicia_canvas(self):
+        
         
     def abrir(self):
         global info
@@ -61,23 +64,50 @@ class App:
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
+        
+    def visor(self):
+        ret, frame=self.get_frame()
+        if ret:
+            self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
+            self.canvas.create_image(0,0,image=self.photo,anchor=NW)#0,0
+            self.ventana.after(15,self.visor)
                     
     def active_cam(self):
         if self.active_camera == False:
             self.active_camera = True
             self.btnCamera.configure(text="CERRAR CAMARA")
-            self.vid=cv2.VideoCapture(0)
-            ret, frame = self.vid.read()
+            self.VideoCaptura()
+            self.visor()
         else:
             self.active_camera = False
             self.btnCamera.configure(text="INICIAR CAMARA")
             self.vid.release()
 
+    def get_frame(self):
+        #self.VideoCaptura()
+        if self.vid.isOpened():
+            verif,frame=self.vid.read()
+            if verif:
+                return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            else:
+                return(verif,None)
+        else:
+            verif=False
+            return(verif,None)
+        
+    def VideoCaptura(self):
+        print("exe")
+        self.vid = cv2.VideoCapture(self.font_video)
+        self.width=self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        self.canvas.configure(width=self.width,height=self.height)
+
     def __del__(self):
         print("OK")
 
 if __name__=="__main__":
-    App()
+    App()       
+          
           
 
          
