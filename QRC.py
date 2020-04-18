@@ -10,8 +10,7 @@ import os
 
 class App:
     def __init__(self):#,font_video=0):
-        global active_camera
-        active_camera = False
+        self.active_camera = False
         self.appName = 'QR Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -64,14 +63,13 @@ class App:
         os.remove("QRsearch_screenshoot.jpg")
                     
     def active_cam(self):
-        global active_camera
-        if active_camera == False:
-            active_camera = True
+        if self.active_camera == False:
+            self.active_camera = True
             self.btnCamera.configure(text="CERRAR CAMARA")
             self.vid=cv2.VideoCapture(0)
             ret, frame = self.vid.read()
         else:
-            active_camera = False
+            self.active_camera = False
             self.btnCamera.configure(text="INICIAR CAMARA")
             self.vid.release()
 
@@ -80,5 +78,6 @@ class App:
 
 if __name__=="__main__":
     App()
-         
+          
+
          
