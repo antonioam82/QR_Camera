@@ -45,7 +45,6 @@ class App:
             documento.write(linea)
             documento.close()
             messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'QR_info.txt\'")
-
     def captura(self):
         ver,frame=self.vid.get_frame()
         if ver:
@@ -59,6 +58,9 @@ class App:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.canvas.create_image(0,0,image=self.photo,anchor=NW)#0,0
             self.ventana.after(15,self.visor)
+        else:
+            messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
+               Cierrela e intentelo de nuevo.""")
 
     def leer(self):
         archivo = cv2.imread("cameraCapt.jpg")
@@ -88,7 +90,6 @@ class VideoCaptura:
         else:
             return(verif,None)
         
-
     def __del__(self):
         print("OK")
         #if self.vid.isOpened():
