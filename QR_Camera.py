@@ -46,7 +46,7 @@ class App:
         if self.info != []:
             documento=open('QR_info.txt',"w",encoding="utf-8")
             linea=""
-            for c in str(info[0][0]):
+            for c in str(self.info[0][0]):
                 linea=linea+c
             documento.write(linea)
             documento.close()
