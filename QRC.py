@@ -82,6 +82,7 @@ class App:
             self.active_camera = False
             self.btnCamera.configure(text="INICIAR CAMARA")
             self.vid.release()
+            self.canvas.delete('all')
 
     def get_frame(self):
         #self.VideoCaptura()
@@ -106,8 +107,7 @@ class App:
         print("OK")
 
 if __name__=="__main__":
-    App()       
-          
+    App() 
           
 
          
