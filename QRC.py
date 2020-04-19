@@ -1,4 +1,4 @@
-from tkinter import *
+ from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -35,11 +35,7 @@ class App:
                                 activebackground='red',command=self.screen_shot)
         self.btnScreen.pack(side=LEFT)
 
-        #self.visor()
         self.ventana.mainloop()
-        
-    #def inicia_canvas(self):
-        
         
     def abrir(self):
         global info
@@ -110,6 +106,7 @@ class App:
 
 if __name__=="__main__":
     App()                    
+                        
         
 
          
