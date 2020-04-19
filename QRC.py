@@ -23,7 +23,7 @@ class App:
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
         
-        self.canvas=Canvas(self.ventana,bg='black')#,width=self.vid.width,height=self.vid.height 600
+        self.canvas=Canvas(self.ventana,bg='black',width=640,height=480)#,width=self.vid.width,height=self.vid.height 600
         self.canvas.pack()
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
@@ -101,13 +101,15 @@ class App:
         self.vid = cv2.VideoCapture(self.font_video)
         self.width=self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        #print(self.width)
+        #print(self.height)
         self.canvas.configure(width=self.width,height=self.height)
 
     def __del__(self):
         print("OK")
 
 if __name__=="__main__":
-    App() 
-          
+    App()                    
+        
 
          
