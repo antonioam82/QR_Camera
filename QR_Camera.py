@@ -1,4 +1,4 @@
-from tkinter import *
+ from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -12,7 +12,7 @@ class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
-        self.appName = 'QR Camera'
+        self.appName = 'QR & BarCode Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
@@ -66,6 +66,9 @@ class App:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.canvas.create_image(0,0,image=self.photo,anchor=NW)
             self.ventana.after(15,self.visor)
+        else:
+            messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
+               Cierrela e intentelo de nuevo.""")            
                     
     def active_cam(self):
         if self.active_camera == False:
@@ -92,6 +95,7 @@ class App:
                 self.capta(frame)
                 return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
+                
                 return(verif,None)
         else:
             verif=False
@@ -109,6 +113,7 @@ class App:
 
 if __name__=="__main__":
     App()                    
+                          
         
 
 
