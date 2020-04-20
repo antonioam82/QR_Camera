@@ -1,4 +1,4 @@
-from tkinter import *
+ from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -17,7 +17,6 @@ class App:
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
         self.font_video=font_video
-        #self.vid=VideoCaptura(self.font_video)
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
@@ -29,7 +28,7 @@ class App:
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
-        self.btnCamera = Button(self.ventana,text="INICIAR CAMARA",width=29,bg='goldenrod2',
+        self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
         self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=30,bg='goldenrod2',
@@ -76,14 +75,21 @@ class App:
             self.visor()
         else:
             self.active_camera = False
-            self.btnCamera.configure(text="INICIAR CAMARA")
+            self.btnCamera.configure(text="INICIAR CAPTURA POR CAMARA")
             self.vid.release()
             self.canvas.delete('all')
+            
+    def capta(self,frm):
+        self.info = decode(frm)
+        if self.info != []:
+            self.display.delete('1.0',END)
+            self.display.insert(END,self.info[0][0])
 
     def get_frame(self):
         if self.vid.isOpened():
             verif,frame=self.vid.read()
             if verif:
+                self.capta(frame)
                 return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
                 return(verif,None)
@@ -102,8 +108,7 @@ class App:
         print("OK")
 
 if __name__=="__main__":
-    App()                    
-                      
+    App()           
                         
         
 
