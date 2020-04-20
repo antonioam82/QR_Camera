@@ -92,7 +92,8 @@ class App:
                 self.capta(frame)
                 return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
-                
+                messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
+                Cierrela e intentelo de nuevo.""")                
                 return(verif,None)
         else:
             verif=False
@@ -110,7 +111,8 @@ class App:
 
 if __name__=="__main__":
     App()                    
-                    
+        
+              
         
 
 
