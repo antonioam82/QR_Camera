@@ -23,7 +23,7 @@ class App:
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
         
-        self.canvas=Canvas(self.ventana,bg='black',width=640,height=480)#,width=self.vid.width,height=self.vid.height 600
+        self.canvas=Canvas(self.ventana,bg='black',width=640,height=480)
         self.canvas.pack()
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
@@ -64,7 +64,7 @@ class App:
         ret, frame=self.get_frame()
         if ret:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
-            self.canvas.create_image(0,0,image=self.photo,anchor=NW)#0,0
+            self.canvas.create_image(0,0,image=self.photo,anchor=NW)
             self.ventana.after(15,self.visor)
                     
     def active_cam(self):
@@ -108,7 +108,7 @@ class App:
         print("OK")
 
 if __name__=="__main__":
-    App()           
+    App()         
                         
         
 
