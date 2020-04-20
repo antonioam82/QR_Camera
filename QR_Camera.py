@@ -1,4 +1,4 @@
- from tkinter import *
+from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -66,9 +66,6 @@ class App:
             self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
             self.canvas.create_image(0,0,image=self.photo,anchor=NW)
             self.ventana.after(15,self.visor)
-        else:
-            messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
-               Cierrela e intentelo de nuevo.""")            
                     
     def active_cam(self):
         if self.active_camera == False:
@@ -113,7 +110,7 @@ class App:
 
 if __name__=="__main__":
     App()                    
-                          
+                    
         
 
 
