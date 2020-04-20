@@ -1,4 +1,4 @@
- from tkinter import *
+from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -11,6 +11,7 @@ import os
 class App:
     def __init__(self,font_video=0):
         self.active_camera = False
+        self.info = []
         self.appName = 'QR Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -38,25 +39,24 @@ class App:
         self.ventana.mainloop()
         
     def abrir(self):
-        global info
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
         if ruta != "":
             archivo = cv2.imread(ruta)
-            info = decode(archivo)
-            if info != []:
+            self.info = decode(archivo)
+            if self.info != []:
                 self.display.delete('1.0',END)
-                self.display.insert(END,info[0][0])
+                self.display.insert(END,self.info[0][0])
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
         
     def screen_shot(self):
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
         archivo = cv2.imread("QRsearch_screenshoot.jpg")
-        info = decode(archivo)
-        if info != []:
+        self.info = decode(archivo)
+        if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,info[0][0])
+            self.display.insert(END,self.info[0][0])
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
@@ -81,7 +81,6 @@ class App:
             self.canvas.delete('all')
 
     def get_frame(self):
-        #self.VideoCaptura()
         if self.vid.isOpened():
             verif,frame=self.vid.read()
             if verif:
@@ -97,8 +96,6 @@ class App:
         self.vid = cv2.VideoCapture(self.font_video)
         self.width=self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        #print(self.width)
-        #print(self.height)
         self.canvas.configure(width=self.width,height=self.height)
 
     def __del__(self):
@@ -106,6 +103,7 @@ class App:
 
 if __name__=="__main__":
     App()                    
+                      
                         
         
 
