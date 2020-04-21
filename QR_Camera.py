@@ -107,11 +107,13 @@ class App:
         self.canvas.configure(width=self.width,height=self.height)
 
     def __del__(self):
-        print("OK")
+        if self.active_camera == True:
+            self.vid.release()
 
 if __name__=="__main__":
-    App()                    
+    App()
         
+
               
         
 
