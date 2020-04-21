@@ -1,4 +1,4 @@
- from tkinter import *
+from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
 from pyzbar.pyzbar import decode
@@ -12,15 +12,15 @@ class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
-        self.appName = 'QR Camera'
+        self.appName = 'QR & BarCode Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
         self.font_video=font_video
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
-                                        ,height=4,padx=10, pady=10,font=('Arial', 10))
+        self.display=scrolledtext.ScrolledText(self.ventana,width=76,background='blue',foreground='white'
+                                        ,height=4,padx=10, pady=10,font=('Fixedsys'))
         self.display.pack(side=BOTTOM)
         
         self.canvas=Canvas(self.ventana,bg='black',width=640,height=480)
@@ -92,6 +92,8 @@ class App:
                 self.capta(frame)
                 return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
+                messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
+                Cierrela e intentelo de nuevo.""")                
                 return(verif,None)
         else:
             verif=False
@@ -105,11 +107,11 @@ class App:
         self.canvas.configure(width=self.width,height=self.height)
 
     def __del__(self):
-        print("OK")
+        if self.active_camera == True:
+            self.vid.release()
 
 if __name__=="__main__":
-    App()         
-                        
+    App()            
         
 
          
