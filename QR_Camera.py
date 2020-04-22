@@ -70,7 +70,7 @@ class App:
     def active_cam(self):
         if self.active_camera == False:
             self.active_camera = True
-            self.btnCamera.configure(text="CERRAR CAMARA")
+            
             self.VideoCaptura()
             self.visor()
         else:
@@ -89,22 +89,26 @@ class App:
         if self.vid.isOpened():
             verif,frame=self.vid.read()
             if verif:
+                self.btnCamera.configure(text="CERRAR CAMARA")
                 self.capta(frame)
                 return(verif,cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             else:
                 messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
-                Cierrela e intentelo de nuevo.""")                
+                Cierrela e intentelo de nuevo.""")
+                self.active_camera = False
                 return(verif,None)
         else:
             verif=False
             return(verif,None)
         
     def VideoCaptura(self):
-        print("exe")
         self.vid = cv2.VideoCapture(self.font_video)
-        self.width=self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.configure(width=self.width,height=self.height)
+        if self.vid.isOpened():
+            self.width=self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+            self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            self.canvas.configure(width=self.width,height=self.height)
+        else:
+            messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo no está activado")
 
     def __del__(self):
         if self.active_camera == True:
