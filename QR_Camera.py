@@ -108,7 +108,8 @@ class App:
             self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
             self.canvas.configure(width=self.width,height=self.height)
         else:
-            messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo no está activado")
+            messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo no está activado o disponible")
+            self.active_camera = False
 
     def __del__(self):
         if self.active_camera == True:
