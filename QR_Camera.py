@@ -70,7 +70,6 @@ class App:
     def active_cam(self):
         if self.active_camera == False:
             self.active_camera = True
-            
             self.VideoCaptura()
             self.visor()
         else:
