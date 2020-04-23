@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
@@ -70,6 +72,7 @@ class App:
     def active_cam(self):
         if self.active_camera == False:
             self.active_camera = True
+            
             self.VideoCaptura()
             self.visor()
         else:
