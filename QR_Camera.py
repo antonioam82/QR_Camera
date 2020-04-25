@@ -7,7 +7,7 @@ from pyzbar.pyzbar import decode
 import cv2
 import pyautogui
 import numpy as np
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import os
 
 class App:
@@ -86,6 +86,7 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             self.display.insert(END,self.info[0][0])
+            self.draw_rectangle(frm)
 
     def get_frame(self):
         if self.vid.isOpened():
@@ -102,6 +103,16 @@ class App:
         else:
             verif=False
             return(verif,None)
+        
+    def draw_rectangle(self,frm):
+        codes = decode(frm)
+        for code in codes:
+            data = code.data.decode('ascii')
+            x, y, w, h = code.rect.left, code.rect.top, \
+                        code.rect.width, code.rect.height
+            cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
+            #cv2.rectangle(frm, code.polygon[0], code.polygon[1],
+                          #(0, 255, 0), 4)
         
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
