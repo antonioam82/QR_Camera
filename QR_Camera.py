@@ -111,9 +111,7 @@ class App:
             x, y, w, h = code.rect.left, code.rect.top, \
                         code.rect.width, code.rect.height
             cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
-            #cv2.rectangle(frm, code.polygon[0], code.polygon[1],
-                          #(0, 255, 0), 4)
-        
+            
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
         if self.vid.isOpened():
