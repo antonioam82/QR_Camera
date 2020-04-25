@@ -3,18 +3,17 @@
 from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
-#from pyzbar.pyzbar import decode
+from pyzbar.pyzbar import decode
 import cv2
 import pyautogui
 import numpy as np
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import os
 
 class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
-        self.dtector = cv2.QRCodeDetector()
         self.appName = 'QR Code Camera'
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -87,6 +86,7 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             self.display.insert(END,self.info[0][0])
+            self.draw_rectangle(frm)
 
     def get_frame(self):
         if self.vid.isOpened():
@@ -103,6 +103,14 @@ class App:
         else:
             verif=False
             return(verif,None)
+        
+    def draw_rectangle(self,frm):
+        codes = decode(frm)
+        for code in codes:
+            data = code.data.decode('ascii')
+            x, y, w, h = code.rect.left, code.rect.top, \
+                        code.rect.width, code.rect.height
+            cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 8)
         
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
