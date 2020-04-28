@@ -83,7 +83,7 @@ class App:
             
     def capta(self,frm):
         self.info = decode(frm)
-        cv2.putText(frm, "Ponga QR delante de la camara", (185, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.putText(frm, "Ponga QR delante de la camara", (186, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
             self.display.delete('1.0',END)
             self.display.insert(END,self.info[0][0])
@@ -130,5 +130,4 @@ class App:
 
 if __name__=="__main__":
     App()
-
 
