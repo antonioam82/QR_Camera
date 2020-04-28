@@ -14,7 +14,7 @@ class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
-        self.appName = 'QR Code Camera'
+        self.appName = 'QR Code Reader'
         self.ventana = Tk()
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
@@ -130,3 +130,4 @@ class App:
 
 if __name__=="__main__":
     App()
+
