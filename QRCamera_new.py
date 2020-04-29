@@ -45,7 +45,6 @@ class App:
 
     def guardar(self):
         if self.content != "":
-            print(type(self.content))
             documento=open('QR_info.txt',"w",encoding="utf-8")
             linea=""
             for c in str(self.content):
