@@ -21,6 +21,9 @@ class App:
         self.font_video=font_video
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
+        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar)
+        self.btnSave.pack(side=BOTTOM)
+        
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
         self.display.pack(side=BOTTOM)
@@ -38,6 +41,16 @@ class App:
         self.btnScreen.pack(side=LEFT)
 
         self.ventana.mainloop()
+
+    def guardar(self):
+        if self.info != []:
+            documento=open('QR_info.txt',"w",encoding="utf-8")
+            linea=""
+            for c in str(self.info[0][0]):
+                linea=linea+c
+            documento.write(linea)
+            documento.close()
+            messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'QR_info.txt\'")
         
     def abrir(self):
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
