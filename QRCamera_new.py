@@ -45,6 +45,7 @@ class App:
 
     def guardar(self):
         if self.content != "":
+            print(type(self.content))
             documento=open('QR_info.txt',"w",encoding="utf-8")
             linea=""
             for c in str(self.content):
@@ -102,7 +103,7 @@ class App:
             
     def capta(self,frm):
         self.info = decode(frm)
-        cv2.putText(frm, "Ponga QR delante de la camara", (186, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.putText(frm, "Muestre el codigo QR delante de la camara para su lectura", (82, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
             self.display.delete('1.0',END)
             self.display.insert(END,self.info[0][0])
