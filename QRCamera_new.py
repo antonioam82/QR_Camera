@@ -45,7 +45,6 @@ class App:
 
     def guardar(self):
         if self.content != "":
-            print(type(self.content))
             documento=open('QR_info.txt',"w",encoding="utf-8")
             linea=""
             for c in str(self.content):
@@ -67,6 +66,7 @@ class App:
                 self.content = self.info[0][0]
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
+                self.display.delete('1.0',END)
         
     def screen_shot(self):
         self.content = ""
@@ -79,6 +79,7 @@ class App:
             self.content = self.info[0][0]
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
+            self.display.delete('1.0',END)
         os.remove("QRsearch_screenshoot.jpg")
         
     def visor(self):
@@ -121,6 +122,7 @@ class App:
                 messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
                 Cierrela e intentelo de nuevo.""")
                 self.active_cam()
+                self.display.delete('1.0',END)
                 return(verif,None)
         else:
             verif=False
