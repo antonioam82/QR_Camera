@@ -145,6 +145,7 @@ class App:
             self.canvas.configure(width=self.width,height=self.height)
         else:
             messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo no está activado o disponible")
+            self.display.delete('1.0',END)
             self.active_camera = False
 
     def __del__(self):
