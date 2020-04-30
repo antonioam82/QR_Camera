@@ -120,7 +120,7 @@ class App:
             else:
                 messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
                 Cierrela e intentelo de nuevo.""")
-                self.active_camera = False
+                self.active_cam()
                 return(verif,None)
         else:
             verif=False
