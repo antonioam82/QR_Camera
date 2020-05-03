@@ -34,12 +34,12 @@ class App:
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
-        self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=29,bg='goldenrod2',
+        self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
-        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=30,bg='goldenrod2',
+        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.screen_shot)
-        self.btnScreen.pack(side=LEFT)
+        self.btnScreen.pack(side=RIGHT)
 
         self.ventana.mainloop()
 
