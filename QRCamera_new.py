@@ -3,7 +3,7 @@
 from tkinter import *
 import tkinter.scrolledtext as scrolledtext
 from tkinter import messagebox, filedialog
-from pyzbar.pyzbar import decode
+from pyzbar.pyzbar import decode, ZBarSymbol
 import cv2
 import pyautogui
 import numpy as np
@@ -129,13 +129,14 @@ class App:
             return(verif,None)
         
     def draw_rectangle(self,frm):
-        codes = decode(frm)
+        codes = decode(frm,symbols=[ZBarSymbol.QRCODE])
         for code in codes:
             data = code.data.decode('ascii')
             x, y, w, h = code.rect.left, code.rect.top, \
                         code.rect.width, code.rect.height
             cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
             cv2.putText(frm, "QR Code", (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 50, 255), 2)
+            cv2.rectangle(frm, code.polygon[0], code.polygon[1],(0, 255, 0), 4)
         
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
@@ -154,5 +155,6 @@ class App:
 
 if __name__=="__main__":
     App()
+
 
 
