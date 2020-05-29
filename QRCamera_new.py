@@ -129,8 +129,8 @@ class App:
             return(verif,None)
         
     def draw_rectangle(self,frm):
-        codes = decode(frm,symbols=[ZBarSymbol.QRCODE])
-        #codes = decode(frm)
+        #codes = decode(frm,symbols=[ZBarSymbol.QRCODE])
+        codes = decode(frm)
         for code in codes:
             data = code.data.decode('ascii')
             x, y, w, h = code.rect.left, code.rect.top, \
