@@ -30,13 +30,13 @@ class App:
  
         self.canvas=Canvas(self.ventana,bg='black',width=640,height=0)
         self.canvas.pack()
-        self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
+        self.btnLoad = Button(self.ventana,text="CARGAR CODIGO QR",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
         self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
-        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
+        self.btnScreen = Button(self.ventana,text="DETECTAR QR EN PANTALLA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.screen_shot)
         self.btnScreen.pack(side=RIGHT)
  
@@ -120,7 +120,6 @@ class App:
             return(verif,None)
  
     def draw_rectangle(self,frm):
-       # codes = decode(frm,symbols=[ZBarSymbol.QRCODE])
         codes = decode(frm)
         for code in codes:
             data = code.data.decode('ascii')
@@ -128,7 +127,6 @@ class App:
                         code.rect.width, code.rect.height
             cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
             cv2.putText(frm, "QR Code", (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 50, 255), 2)
-            #cv2.rectangle(frm, code.polygon[0], code.polygon[1],(0, 255, 0), 4)###############################################################
  
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
