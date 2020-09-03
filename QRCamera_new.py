@@ -102,8 +102,9 @@ class App:
         cv2.putText(frm, "Muestre el codigo delante de la camara para su lectura", (84, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,self.info[0][0])
-            self.draw_rectangle(frm)
+            for code in self.info:
+                self.display.insert(END,(str(code[0])+'\n'))
+                self.draw_rectangle(frm)
  
     def get_frame(self):
         if self.vid.isOpened():
