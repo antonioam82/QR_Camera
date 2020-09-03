@@ -58,11 +58,10 @@ class App:
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
         if ruta != "":
             archivo = cv2.imread(ruta)
-            self.info = decode(archivo,symbols=[ZBarSymbol.QRCODE])
+            self.info = decode(archivo)#symbols=[ZBarSymbol.QRCODE])
             if self.info != []:
                 self.display.delete('1.0',END)
                 for i in self.info:
-                    print("n")
                     self.display.insert(END,(str(i[0])+'\n'))
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
