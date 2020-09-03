@@ -73,7 +73,8 @@ class App:
         self.info = decode(archivo)
         if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,self.info[0][0])
+            for i in self.info:
+                self.display.insert(END,(str(i[0])+'\n'))
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
