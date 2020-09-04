@@ -64,7 +64,7 @@ class App:
                 self.display.delete('1.0',END)
                 for i in self.info:
                     print(i.type)
-                    self.display.insert(END,(str(i[0])+'\n'))
+                    self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
  
@@ -75,7 +75,7 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             for i in self.info:
-                self.display.insert(END,(str(i[0])+'\n'))
+                self.display.insert(END,(i[0].decode('utf-8'))+'\n')
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
@@ -94,7 +94,7 @@ class App:
             self.visor()
         else:
             self.active_camera = False
-            self.capted = 0##########################################################
+            self.capted = 0
             self.btnCamera.configure(text="INICIAR CAPTURA POR CAMARA")
             self.vid.release()
             self.canvas.delete('all')
@@ -104,12 +104,12 @@ class App:
         self.info = decode(frm)
         cv2.putText(frm, "Muestre el codigo delante de la camara para su lectura", (84, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
-            print(len(self.info))
-            #self.display.delete('1.0',END)
+            #print(len(self.info))
+            self.display.delete('1.0',END)
             for code in self.info:
-                if self.capted < len(self.info):
-                    self.capted += 1
-                    self.display.insert(END,(str(code[0])+'\n'))
+                #if self.capted < len(self.info):
+                #self.capted += 1
+                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
                 self.draw_rectangle(frm)
  
     def get_frame(self):
