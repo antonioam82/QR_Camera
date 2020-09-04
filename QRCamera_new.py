@@ -14,6 +14,7 @@ import os
 class App:
     def __init__(self,font_video=0):
         self.active_camera = False
+        self.capted = 0
         self.info = []
         self.appName = 'QR Code Reader'
         self.ventana = Tk()
@@ -58,10 +59,11 @@ class App:
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
         if ruta != "":
             archivo = cv2.imread(ruta)
-            self.info = decode(archivo)#symbols=[ZBarSymbol.QRCODE])
+            self.info = decode(archivo)
             if self.info != []:
                 self.display.delete('1.0',END)
                 for i in self.info:
+                    print(i.type)
                     self.display.insert(END,(str(i[0])+'\n'))
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
@@ -92,6 +94,7 @@ class App:
             self.visor()
         else:
             self.active_camera = False
+            self.capted = 0##########################################################
             self.btnCamera.configure(text="INICIAR CAPTURA POR CAMARA")
             self.vid.release()
             self.canvas.delete('all')
@@ -101,9 +104,12 @@ class App:
         self.info = decode(frm)
         cv2.putText(frm, "Muestre el codigo delante de la camara para su lectura", (84, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
-            self.display.delete('1.0',END)
+            print(len(self.info))
+            #self.display.delete('1.0',END)
             for code in self.info:
-                self.display.insert(END,(str(code[0])+'\n'))
+                if self.capted < len(self.info):
+                    self.capted += 1
+                    self.display.insert(END,(str(code[0])+'\n'))
                 self.draw_rectangle(frm)
  
     def get_frame(self):
@@ -123,14 +129,13 @@ class App:
             return(verif,None)
  
     def draw_rectangle(self,frm):
-       # codes = decode(frm,symbols=[ZBarSymbol.QRCODE])
         codes = decode(frm)
         for code in codes:
             data = code.data.decode('ascii')
             x, y, w, h = code.rect.left, code.rect.top, \
                         code.rect.width, code.rect.height
             cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
-            cv2.putText(frm, "QR Code", (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 50, 255), 2)
+            cv2.putText(frm, code.type, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 50, 255), 2)
             #cv2.rectangle(frm, code.polygon[0], code.polygon[1],(0, 255, 0), 4)###############################################################
  
     def VideoCaptura(self):
