@@ -30,13 +30,13 @@ class App:
  
         self.canvas=Canvas(self.ventana,bg='black',width=640,height=0)
         self.canvas.pack()
-        self.btnLoad = Button(self.ventana,text="CARGAR CODIGO QR",width=29,bg='goldenrod2',
+        self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
         self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
-        self.btnScreen = Button(self.ventana,text="DETECTAR QR EN PANTALLA",width=29,bg='goldenrod2',
+        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.screen_shot)
         self.btnScreen.pack(side=RIGHT)
  
@@ -60,7 +60,8 @@ class App:
             self.info = decode(archivo)
             if self.info != []:
                 self.display.delete('1.0',END)
-                self.display.insert(END,self.info[0][0])
+                for i in self.info:
+                    self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
  
@@ -70,7 +71,8 @@ class App:
         self.info = decode(archivo)
         if self.info != []:
             self.display.delete('1.0',END)
-            self.display.insert(END,self.info[0][0])
+            for i in self.info:
+                self.display.insert(END,(i[0].decode('utf-8'))+'\n')
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
@@ -113,7 +115,6 @@ class App:
                 messagebox.showwarning("CAMARA NO DISPONIBLE","""La cámara está siendo utilizada por otra aplicación.
                 Cierrela e intentelo de nuevo.""")
                 self.active_cam()
-                #self.display.delete('1.0',END)
                 return(verif,None)
         else:
             verif=False
