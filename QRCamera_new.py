@@ -14,8 +14,8 @@ import os
 class App:
     def __init__(self,font_video=0):
         self.active_camera = False
-        self.capted = 0
         self.info = []
+        self.codelist = []
         self.appName = 'QR Code Reader'
         self.ventana = Tk()
         self.ventana.title(self.appName)
@@ -63,7 +63,6 @@ class App:
             if self.info != []:
                 self.display.delete('1.0',END)
                 for i in self.info:
-                    print(i.type)
                     self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
                 messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
@@ -94,7 +93,7 @@ class App:
             self.visor()
         else:
             self.active_camera = False
-            self.capted = 0
+            self.codelist = []
             self.btnCamera.configure(text="INICIAR CAPTURA POR CAMARA")
             self.vid.release()
             self.canvas.delete('all')
@@ -104,12 +103,11 @@ class App:
         self.info = decode(frm)
         cv2.putText(frm, "Muestre el codigo delante de la camara para su lectura", (84, 37), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         if self.info != []:
-            #print(len(self.info))
             self.display.delete('1.0',END)
             for code in self.info:
-                #if self.capted < len(self.info):
-                #self.capted += 1
-                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+                if code not in self.codelist:
+                    self.codelist.append(code)
+                    self.display.insert(END,(code[0].decode('utf-8'))+'\n')
                 self.draw_rectangle(frm)
  
     def get_frame(self):
@@ -136,7 +134,6 @@ class App:
                         code.rect.width, code.rect.height
             cv2.rectangle(frm, (x,y),(x+w, y+h),(255, 0, 0), 6)
             cv2.putText(frm, code.type, (x - 10, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 50, 255), 2)
-            #cv2.rectangle(frm, code.polygon[0], code.polygon[1],(0, 255, 0), 4)###############################################################
  
     def VideoCaptura(self):
         self.vid = cv2.VideoCapture(self.font_video)
