@@ -7,7 +7,6 @@ from pyzbar.pyzbar import decode, ZBarSymbol
 import cv2
 import pyautogui
 import numpy as np
-import threading
 from PIL import Image, ImageTk, ImageDraw
 import os
  
@@ -15,9 +14,9 @@ class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
-        self.codelist = []
         self.appName = 'QR Code Reader'
         self.ventana = Tk()
+        self.codelist = []
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
         self.font_video=font_video
@@ -65,7 +64,7 @@ class App:
                 for i in self.info:
                     self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
-                messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
+                messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
  
     def screen_shot(self):
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
@@ -105,10 +104,9 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             for code in self.info:
-                if code not in self.codelist:
-                    self.codelist.append(code)
-                    self.display.insert(END,(code[0].decode('utf-8'))+'\n')
-                self.draw_rectangle(frm)
+                self.codelist.append(code)
+                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+            self.draw_rectangle(frm)
  
     def get_frame(self):
         if self.vid.isOpened():
