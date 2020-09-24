@@ -7,6 +7,7 @@ from pyzbar.pyzbar import decode, ZBarSymbol
 import cv2
 import pyautogui
 import numpy as np
+import threading
 from PIL import Image, ImageTk, ImageDraw
 import os
  
@@ -14,9 +15,9 @@ class App:
     def __init__(self,font_video=0):
         self.active_camera = False
         self.info = []
+        self.codelist = []
         self.appName = 'QR Code Reader'
         self.ventana = Tk()
-        self.codelist = []
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
         self.font_video=font_video
@@ -45,13 +46,15 @@ class App:
  
     def guardar(self):
         if len(self.display.get('1.0',END))>1:
-            documento=open('QR_info.txt',"w",encoding="utf-8")
+            documento = filedialog.asksaveasfilename(initialdir="/",
+                        title="Guardar en",defaultextension='.txt')
+            archivo_guardar = open(documento,"w",encoding="utf-8")
             linea=""
             for c in str(self.display.get('1.0',END)):
                 linea=linea+c
-            documento.write(linea)
-            documento.close()
-            messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'QR_info.txt\'")
+            archivo_guardar.write(linea)
+            archivo_guardar.close()
+            messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'{}\'".format(documento))
  
     def abrir(self):
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
@@ -64,7 +67,7 @@ class App:
                 for i in self.info:
                     self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
-                messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
+                messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
  
     def screen_shot(self):
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
@@ -104,9 +107,10 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             for code in self.info:
-                self.codelist.append(code)
-                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
-            self.draw_rectangle(frm)
+                if code not in self.codelist:
+                    self.codelist.append(code)
+                    self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+                self.draw_rectangle(frm)
  
     def get_frame(self):
         if self.vid.isOpened():
