@@ -48,13 +48,14 @@ class App:
         if len(self.display.get('1.0',END))>1:
             documento = filedialog.asksaveasfilename(initialdir="/",
                         title="Guardar en",defaultextension='.txt')
-            archivo_guardar = open(documento,"w",encoding="utf-8")
-            linea=""
-            for c in str(self.display.get('1.0',END)):
-                linea=linea+c
-            archivo_guardar.write(linea)
-            archivo_guardar.close()
-            messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'{}\'".format(documento))
+            if documento != "":
+                archivo_guardar = open(documento,"w",encoding="utf-8")
+                linea=""
+                for c in str(self.display.get('1.0',END)):
+                    linea=linea+c
+                archivo_guardar.write(linea)
+                archivo_guardar.close()
+                messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'{}\'".format(documento))
  
     def abrir(self):
         ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
