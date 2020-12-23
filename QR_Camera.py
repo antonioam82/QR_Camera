@@ -35,7 +35,7 @@ class App:
         self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
                     activebackground='red',command=self.abrir)
         self.btnLoad.pack(side=LEFT)
-        self.btnCamera = Button(self.ventana,text="INICIAR CAPTURA POR CAMARA",width=30,bg='goldenrod2',
+        self.btnCamera = Button(self.ventana,text="INICIAR LECTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
         self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
@@ -97,7 +97,7 @@ class App:
         else:
             self.active_camera = False
             self.codelist = []
-            self.btnCamera.configure(text="INICIAR CAPTURA POR CAMARA")
+            self.btnCamera.configure(text="INICIAR LECTURA POR CAMARA")
             self.vid.release()
             self.canvas.delete('all')
             self.canvas.configure(height=0)
