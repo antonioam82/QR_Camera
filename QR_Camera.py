@@ -68,7 +68,7 @@ class App:
                 for i in self.info:
                     self.display.insert(END,(i[0].decode('utf-8'))+'\n')
             else:
-                messagebox.showwarning("ERROR","NO SE DETECTÓ CÓDIGO")
+                messagebox.showwarning("ARCHIVO NO VÁLIDO","NO SE DETECTÓ CÓDIGO QR.")
  
     def screen_shot(self):
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
@@ -145,7 +145,7 @@ class App:
             self.height=self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
             self.canvas.configure(width=self.width,height=self.height)
         else:
-            messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo no está activado o disponible")
+            messagebox.showwarning("CAMARA NO DISPONIBLE","El dispositivo está desactivado o no disponible")
             self.display.delete('1.0',END)
             self.active_camera = False
  
