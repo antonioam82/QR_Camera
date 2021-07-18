@@ -21,10 +21,9 @@ class App:
         self.ventana.title(self.appName)
         self.ventana['bg']='black'
         self.font_video=font_video
-        self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
+        Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar)
-        self.btnSave.pack(side=BOTTOM)
+        Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar).pack(side=BOTTOM)
  
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
@@ -32,15 +31,11 @@ class App:
  
         self.canvas=Canvas(self.ventana,bg='black',width=640,height=0)
         self.canvas.pack()
-        self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
-                    activebackground='red',command=self.abrir)
-        self.btnLoad.pack(side=LEFT)
-        self.btnCamera = Button(self.ventana,text="INICIAR LECTURA POR CAMARA",width=30,bg='goldenrod2',
+        Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',activebackground='red',command=self.abrir).pack(side=LEFT)
+        self.btnCamera=Button(self.ventana,text="INICIAR LECTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
-        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
-                                activebackground='red',command=self.screen_shot)
-        self.btnScreen.pack(side=RIGHT)
+        Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',activebackground='red',command=self.screen_shot).pack(side=RIGHT)
  
         self.ventana.mainloop()
  
