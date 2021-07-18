@@ -24,7 +24,9 @@ class App:
         self.font_video=font_video
         self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar)
+        self.btnAcces = Button(self.ventana,text="ACCEDER A PAGINA",bg='light blue',height=1,width=90,state='disabled')
+        self.btnAcces.pack(side=BOTTOM)
+        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',height=1,width=90,command=self.guardar)
         self.btnSave.pack(side=BOTTOM)
  
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
@@ -41,7 +43,7 @@ class App:
         self.btnCamera.pack(side=LEFT)
         self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
                                 activebackground='red',command=self.screen_shot)
-        self.btnScreen.pack(side=RIGHT)
+        self.btnScreen.pack(side=RIGHT)     
  
         self.ventana.mainloop()
  
@@ -164,3 +166,5 @@ class App:
  
 if __name__=="__main__":
     App()
+
+
