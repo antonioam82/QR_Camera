@@ -82,13 +82,18 @@ class App:
                 messagebox.showwarning("ARCHIVO NO VÁLIDO","NO SE DETECTÓ CÓDIGO QR.")
  
     def screen_shot(self):
+        self.web_list = []
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
         archivo = cv2.imread("QRsearch_screenshoot.jpg")
         self.info = decode(archivo)
+        print("INFO: ",self.info)
         if self.info != []:
             self.display.delete('1.0',END)
             for i in self.info:
-                self.display.insert(END,(i[0].decode('utf-8'))+'\n')
+                cont = i[0].decode('utf-8')
+                self.display.insert(END,cont+'\n')
+                if "https:" in str(cont):
+                    self.web_list.append(cont)
         else:
             messagebox.showwarning("QR NO ENCONTRADO","NO SE DETECTÓ CÓDIGO")
         os.remove("QRsearch_screenshoot.jpg")
@@ -112,6 +117,10 @@ class App:
             self.vid.release()
             self.canvas.delete('all')
             self.canvas.configure(height=0)
+
+    def webs(self,s):
+        if "https:\\" in s:
+            self.web_list.append(s)
  
     def capta(self,frm):
         self.info = decode(frm)
@@ -121,7 +130,8 @@ class App:
             for code in self.info:
                 if code not in self.codelist:
                     self.codelist.append(code)
-                    self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+                    content = code[0].decode('utf-8')
+                    self.display.insert(END,content+'\n')
                 self.draw_rectangle(frm)
  
     def get_frame(self):
