@@ -112,10 +112,13 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             for code in self.info:
-                if code not in self.codelist:
-                    self.codelist.append(code)
-                    self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+                if code[0] not in self.codelist:
+                    self.codelist.append(code[0])
+                print(len(self.codelist))
+                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
                 self.draw_rectangle(frm)
+        else:
+            self.codelist = []
  
     def get_frame(self):
         if self.vid.isOpened():
@@ -159,6 +162,7 @@ class App:
  
 if __name__=="__main__":
     App()
+
 
 
 
