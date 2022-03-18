@@ -114,7 +114,7 @@ class App:
             for code in self.info:
                 if code[0] not in self.codelist:
                     self.codelist.append(code[0])
-                print(len(self.codelist))
+                #print(len(self.codelist))
                 self.display.insert(END,(code[0].decode('utf-8'))+'\n')
                 self.draw_rectangle(frm)
         else:
