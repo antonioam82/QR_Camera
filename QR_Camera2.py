@@ -19,12 +19,12 @@ class App:
         self.appName = 'QR Code Reader'
         self.ventana = Tk()
         self.ventana.title(self.appName)
+        self.ventana.resizable(height=FALSE,width=FALSE)##
         self.ventana['bg']='black'
         self.font_video=font_video
-        self.label=Label(self.ventana,text=self.appName,font=15,bg='blue',
+        Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
-        self.btnSave = Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar)
-        self.btnSave.pack(side=BOTTOM)
+        Button(self.ventana,text="GUARDAR INFO",bg='light blue',command=self.guardar).pack(side=BOTTOM)
  
         self.display=scrolledtext.ScrolledText(self.ventana,width=86,background='snow3'
                                         ,height=4,padx=10, pady=10,font=('Arial', 10))
@@ -32,15 +32,11 @@ class App:
  
         self.canvas=Canvas(self.ventana,bg='black',width=640,height=0)
         self.canvas.pack()
-        self.btnLoad = Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',
-                    activebackground='red',command=self.abrir)
-        self.btnLoad.pack(side=LEFT)
-        self.btnCamera = Button(self.ventana,text="INICIAR LECTURA POR CAMARA",width=30,bg='goldenrod2',
+        Button(self.ventana,text="CARGAR ARCHIVO",width=29,bg='goldenrod2',activebackground='red',command=self.abrir).pack(side=LEFT)
+        self.btnCamera=Button(self.ventana,text="INICIAR LECTURA POR CAMARA",width=30,bg='goldenrod2',
                                 activebackground='red',command=self.active_cam)
         self.btnCamera.pack(side=LEFT)
-        self.btnScreen = Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',
-                                activebackground='red',command=self.screen_shot)
-        self.btnScreen.pack(side=RIGHT)
+        Button(self.ventana,text="DETECTAR EN PANTALLA",width=29,bg='goldenrod2',activebackground='red',command=self.screen_shot).pack(side=RIGHT)
  
         self.ventana.mainloop()
  
@@ -58,21 +54,17 @@ class App:
                 messagebox.showinfo("GUARDADO","INFORMACIÓN GUARDADA EN \'{}\'".format(documento))
  
     def abrir(self):
-        try:
-            ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
+        ruta = filedialog.askopenfilename(initialdir="/",title="SELECCIONAR ARCHIVO",
                     filetypes =(("png files","*.png") ,("jpg files","*.jpg")))
-            if ruta != "":
-                archivo = cv2.imread(ruta)
-                self.info = decode(archivo)
-                if self.info != []:
-                    self.display.delete('1.0',END)
-                    for i in self.info:
-                        self.display.insert(END,(i[0].decode('utf-8'))+'\n')
-                else:
-                    messagebox.showwarning("ARCHIVO NO VÁLIDO","NO SE DETECTÓ CÓDIGO QR.")
-                    
-        except Exception as e:
-            messagebox.showwarning("UNEXPECTED ERROR",str(e))
+        if ruta != "":
+            archivo = cv2.imread(ruta)
+            self.info = decode(archivo)
+            if self.info != []:
+                self.display.delete('1.0',END)
+                for i in self.info:
+                    self.display.insert(END,(i[0].decode('utf-8'))+'\n')
+            else:
+                messagebox.showwarning("ARCHIVO NO VÁLIDO","NO SE DETECTÓ CÓDIGO QR.")
  
     def screen_shot(self):
         pyautogui.screenshot("QRsearch_screenshoot.jpg")
@@ -112,13 +104,16 @@ class App:
         if self.info != []:
             self.display.delete('1.0',END)
             for code in self.info:
-                if code[0] not in self.codelist:
-                    self.codelist.append(code[0])
-                #print(len(self.codelist))
-                self.display.insert(END,(code[0].decode('utf-8'))+'\n')
+                if code not in self.codelist:
+                    content = code[0].decode('utf-8')
+                    self.codelist.append(content)
+                    self.display.insert(END,content+'\n')
                 self.draw_rectangle(frm)
         else:
-            self.codelist = []
+            if len(self.codelist)>0:
+                self.display.delete('1.0',END)
+                for e in set(self.codelist):
+                    self.display.insert(END,e+'\n')
  
     def get_frame(self):
         if self.vid.isOpened():
@@ -162,7 +157,6 @@ class App:
  
 if __name__=="__main__":
     App()
-
 
 
 
