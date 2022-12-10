@@ -22,7 +22,10 @@ class App:
         self.ventana.title(self.appName)
         self.ventana.resizable(height=FALSE,width=FALSE)##
         self.ventana['bg']='black'
+        self.currentDir = StringVar()
+        self.currentDir.set(os.getcwd())
         self.font_video=font_video
+        Entry(self.ventana,textvariable=self.currentDir,width=107).pack(side=TOP)
         Label(self.ventana,text=self.appName,font=15,bg='blue',
                          fg='white').pack(side=TOP,fill=BOTH)
         bt_canvas = Canvas(self.ventana)
@@ -169,3 +172,4 @@ class App:
  
 if __name__=="__main__":
     App()
+
