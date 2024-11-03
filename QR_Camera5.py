@@ -121,8 +121,9 @@ class App:
             for info in decoded_info:
                 if info not in self.codelist:
                     self.codelist.append(info)
-                    self.display.insert(tk.END, info + '\n')
+                    #self.display.insert(tk.END, info + '\n')
                 self.draw_rectangle(frm, points)
+                self.display.insert(tk.END, info + '\n')##############
         else:
             if len(self.codelist) > 0:
                 self.display.delete('1.0', tk.END)
